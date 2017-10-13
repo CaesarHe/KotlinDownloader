@@ -32,8 +32,5 @@ class DownloadDBHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "download", 
 
 }
 
-val Context.database: DownloadDBHelper
-    get() = DownloadDBHelper.getInstance(applicationContext)
-
 val LONG: SqlType = SqlType.create("LONG")
 val INTEGER_PRIMARY_KEY_AUTOINCREMENT: SqlType = SqlType.create("INTEGER PRIMARY KEY AUTOINCREMENT")

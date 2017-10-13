@@ -3,9 +3,9 @@ package com.kotlindownloader.download
 import android.util.Log
 import com.kotlindownloader.MyApplication
 import com.kotlindownloader.db.DownloadDBHelper
-import com.kotlindownloader.db.database
 import com.kotlindownloader.download.entity.DownloadRequest
 import com.kotlindownloader.download.listener.IDownloadListener
+import com.kotlindownloader.extensions.database
 import com.kotlindownloader.extensions.deleteSafe
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.db.MapRowParser
@@ -55,7 +55,7 @@ class DownloadTaskManager : AnkoLogger {
     }
 
     init {
-        MyApplication.app.database.use {
+        database.use {
             runningList.clear()
             select(DownloadDBHelper.TABLE_NAME).parseList {
                 var task = DownloadTask(DownloadRequest(HashMap(it)))

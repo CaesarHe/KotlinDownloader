@@ -4,8 +4,11 @@ import android.content.Context
 import android.os.Handler
 import android.os.Looper
 import android.support.v4.app.Fragment
+import com.kotlindownloader.MyApplication
+import com.kotlindownloader.db.DownloadDBHelper
 import com.kotlindownloader.download.DownloadManager
 import com.kotlindownloader.download.DownloadTask
+import com.kotlindownloader.download.DownloadTaskManager
 import com.kotlindownloader.download.entity.DownloadRequest
 import com.kotlindownloader.fragment.RecommendListAdapter
 
@@ -29,3 +32,8 @@ object ContextHelper {
     val handler = Handler(Looper.getMainLooper())
     val mainThread: Thread = Looper.getMainLooper().thread
 }
+
+val DownloadRequest.database: DownloadDBHelper
+    get() = DownloadDBHelper.getInstance(MyApplication.app.applicationContext)
+val DownloadTaskManager.database: DownloadDBHelper
+    get() = DownloadDBHelper.getInstance(MyApplication.app.applicationContext)

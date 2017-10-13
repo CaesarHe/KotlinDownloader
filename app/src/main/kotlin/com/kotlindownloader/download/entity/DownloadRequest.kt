@@ -1,18 +1,14 @@
 package com.kotlindownloader.download.entity
 
 import android.util.Log
-import com.kotlindownloader.MyApplication
 import com.kotlindownloader.db.DownloadDBHelper.Companion.TABLE_NAME
-import com.kotlindownloader.db.database
 import com.kotlindownloader.download.listener.DownloadListenerImp
+import com.kotlindownloader.extensions.database
 import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.coroutines.experimental.Ref
-import org.jetbrains.anko.coroutines.experimental.asReference
 import org.jetbrains.anko.db.delete
 import org.jetbrains.anko.db.insert
 import org.jetbrains.anko.db.update
 import org.jetbrains.anko.info
-import java.lang.ref.WeakReference
 import java.util.*
 
 /**
@@ -142,21 +138,21 @@ class DownloadRequest() : AnkoLogger {
              path: String? = this.localPath
     ) = DownloadRequest(id, url, fileName, mContentLength, mCurrentBytes, status, path)
 
-    fun modifyDB() = MyApplication.app.database.use {
+    fun modifyDB() = database.use {
         update(TABLE_NAME,
                 "url" to url, "fileName" to fileName, "mContentLength" to mContentLength, "mCurrentBytes" to mCurrentBytes, "status" to status, "localPath" to localPath
         ).whereArgs("id = {id}", "id" to id).exec()
         info("update id:$id")
     }
 
-    fun insertDB() = MyApplication.app.database.use {
+    fun insertDB() = database.use {
         id = insert(TABLE_NAME,
                 "url" to url, "fileName" to fileName, "mContentLength" to mContentLength, "mCurrentBytes" to mCurrentBytes, "status" to status, "localPath" to localPath
         )
         info("insert id:$id")
     }
 
-    fun deleteDB() = MyApplication.app.database.use {
+    fun deleteDB() = database.use {
         delete(TABLE_NAME, "id = {id}", "id" to id)
         info("delete id:$id")
     }
