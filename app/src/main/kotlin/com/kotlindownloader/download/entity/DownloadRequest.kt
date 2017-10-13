@@ -75,7 +75,7 @@ class DownloadRequest() : AnkoLogger {
 
 
     fun registerListener(init: (DownloadListenerImp.() -> Unit)): DownloadRequest {
-        listener?.let { unRegisterListener()}
+        listener?.let { unRegisterListener() }
         var f = DownloadListenerImp()
         f.init()
         listener = f
@@ -124,10 +124,7 @@ class DownloadRequest() : AnkoLogger {
         return status == STATUS_FAILED
     }
 
-
-    fun getProgress(): Int = if (mContentLength == 0L) {
-        0
-    } else (mCurrentBytes * 100 / mContentLength).toInt()
+    fun getProgress(): Int = if (mContentLength == 0L) { 0} else (mCurrentBytes * 100 / mContentLength).toInt()
 
     fun getProgressAsString(): String {
         var progress: Float = if (mContentLength == 0L) {
@@ -145,28 +142,22 @@ class DownloadRequest() : AnkoLogger {
              path: String? = this.localPath
     ) = DownloadRequest(id, url, fileName, mContentLength, mCurrentBytes, status, path)
 
-    fun modifyDB() {
-        MyApplication.app.database.use {
-            update(TABLE_NAME,
-                    "url" to url, "fileName" to fileName, "mContentLength" to mContentLength, "mCurrentBytes" to mCurrentBytes, "status" to status, "localPath" to localPath
-            ).whereArgs("id = {id}", "id" to id).exec()
-            info("update id:$id")
-        }
+    fun modifyDB() = MyApplication.app.database.use {
+        update(TABLE_NAME,
+                "url" to url, "fileName" to fileName, "mContentLength" to mContentLength, "mCurrentBytes" to mCurrentBytes, "status" to status, "localPath" to localPath
+        ).whereArgs("id = {id}", "id" to id).exec()
+        info("update id:$id")
     }
 
-    fun insertDB() {
-        MyApplication.app.database.use {
-            id = insert(TABLE_NAME,
-                    "url" to url, "fileName" to fileName, "mContentLength" to mContentLength, "mCurrentBytes" to mCurrentBytes, "status" to status, "localPath" to localPath
-            )
-            info("insert id:$id")
-        }
+    fun insertDB() = MyApplication.app.database.use {
+        id = insert(TABLE_NAME,
+                "url" to url, "fileName" to fileName, "mContentLength" to mContentLength, "mCurrentBytes" to mCurrentBytes, "status" to status, "localPath" to localPath
+        )
+        info("insert id:$id")
     }
 
-    fun deleteDB() {
-        MyApplication.app.database.use {
-            delete(TABLE_NAME, "id = {id}", "id" to id)
-            info("delete id:$id")
-        }
+    fun deleteDB() = MyApplication.app.database.use {
+        delete(TABLE_NAME, "id = {id}", "id" to id)
+        info("delete id:$id")
     }
 }

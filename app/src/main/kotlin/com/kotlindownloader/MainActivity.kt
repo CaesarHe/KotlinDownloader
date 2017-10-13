@@ -7,7 +7,10 @@ import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import com.kotlindownloader.fragment.RecommendListFragment
-import org.jetbrains.anko.*
+import org.jetbrains.anko.AnkoComponent
+import org.jetbrains.anko.AnkoContext
+import org.jetbrains.anko.setContentView
+import org.jetbrains.anko.verticalLayout
 
 object ViewID {
     val CONTENT_LAYOUT = 1000
@@ -18,7 +21,6 @@ class MainActivity : AppCompatActivity() {
     val WRITE_EXTERNAL_STORAGE_REQUEST_CODE = 100
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        downloadManager
         super.onCreate(savedInstanceState)
         ActivityUI().setContentView(this)
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)

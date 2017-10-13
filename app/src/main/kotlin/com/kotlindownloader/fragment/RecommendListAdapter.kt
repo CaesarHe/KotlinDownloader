@@ -58,15 +58,15 @@ class RecommendListAdapter(val context: Context, var list: List<Recommend>) : Re
         } else {
             with(request) {
                 when (status) {
-                    com.kotlindownloader.download.entity.DownloadRequest.STATUS_CANCELED -> {
+                    DownloadRequest.STATUS_CANCELED -> {
                         mDownloadManager.runCmd(com.kotlindownloader.download.DownloadManager.CMD_NEW, this)
                         refreshItem(holder, downloadUrl!!)
                     }
-                    com.kotlindownloader.download.entity.DownloadRequest.STATUS_UNKNOW, com.kotlindownloader.download.entity.DownloadRequest.STATUS_FAILED ->
+                    DownloadRequest.STATUS_UNKNOW, DownloadRequest.STATUS_FAILED ->
                         mDownloadManager.runCmd(com.kotlindownloader.download.DownloadManager.CMD_RETRY, this.id)
-                    com.kotlindownloader.download.entity.DownloadRequest.STATUS_RUNNING -> mDownloadManager.runCmd(DownloadManager.CMD_PAUSE, this.id)
-                    com.kotlindownloader.download.entity.DownloadRequest.STATUS_PAUSE -> mDownloadManager.runCmd(DownloadManager.CMD_RESUME, this.id)
-                    com.kotlindownloader.download.entity.DownloadRequest.STATUS_COMPLETE -> {
+                    DownloadRequest.STATUS_RUNNING -> mDownloadManager.runCmd(DownloadManager.CMD_PAUSE, this.id)
+                    DownloadRequest.STATUS_PAUSE -> mDownloadManager.runCmd(DownloadManager.CMD_RESUME, this.id)
+                    DownloadRequest.STATUS_COMPLETE -> {
                         File(request.localPath!!).startAction(context, "application/vnd.android.package-archive")
                     }
                     else -> {
