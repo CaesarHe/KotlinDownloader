@@ -40,6 +40,23 @@ class DownloadRequest() : AnkoLogger {
             Log.e("123", "set localPath: $localPath")
         }
 
+
+    var isPaused: Boolean = false
+        get() = status == STATUS_PAUSE
+
+    var isRuning: Boolean = false
+        get() = status == STATUS_RUNNING
+
+    var isCancelled: Boolean = false
+        get() = status == STATUS_CANCELED
+
+    var isCompleted: Boolean = false
+        get() = status == STATUS_COMPLETE
+
+    var isFailed: Boolean = false
+        get() = status == STATUS_FAILED
+
+
     constructor(map: MutableMap<String, Any?>) : this() {
         this.id = map.getOrDefault("id", 0L) as Long
         this.url = map.getOrDefault("url", "") as String
@@ -102,25 +119,9 @@ class DownloadRequest() : AnkoLogger {
         status = STATUS_PENDING
     }
 
-    fun isPaused(): Boolean {
-        return status == STATUS_PAUSE
-    }
-
-    fun isRuning() = status == STATUS_RUNNING
-
-    fun isCancelled(): Boolean {
-        return status == STATUS_CANCELED
-    }
-
-    fun isCompleted(): Boolean {
-        return status == STATUS_COMPLETE
-    }
-
-    fun isFailed(): Boolean {
-        return status == STATUS_FAILED
-    }
-
-    fun getProgress(): Int = if (mContentLength == 0L) { 0} else (mCurrentBytes * 100 / mContentLength).toInt()
+    fun getProgress(): Int = if (mContentLength == 0L) {
+        0
+    } else (mCurrentBytes * 100 / mContentLength).toInt()
 
     fun getProgressAsString(): String {
         var progress: Float = if (mContentLength == 0L) {

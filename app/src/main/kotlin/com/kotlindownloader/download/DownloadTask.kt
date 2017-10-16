@@ -190,7 +190,7 @@ class DownloadTask(var request: DownloadRequest) : Thread(), AnkoLogger {
         val data = ByteArray(BUFFER_SIZE)
         info("Content Length:${request.mContentLength} for Download Id ${request.id}")
         while (true) {
-            if (!request.isRuning()) {
+            if (!request.isRuning) {
                 info("Stopping the download as Download Request not is running for Downloaded Id ${request.id}")
                 request.finish()
                 return

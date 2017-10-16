@@ -61,7 +61,7 @@ class DownloadTaskManager : AnkoLogger {
                 var task = DownloadTask(DownloadRequest(HashMap(it)))
                 if (!checkContain(task)) {
                     task.taskListener = taskListener
-                    if (task.request.isRuning() && !task.isAlive) {
+                    if (task.request.isRuning && !task.isAlive) {
                         info("resume task from db")
                         Log.e("123", "${task.request.fileName} from db")
                         task.start()
@@ -84,7 +84,7 @@ class DownloadTaskManager : AnkoLogger {
     @Synchronized
     private fun schedule() {
         info("method: schedule")
-        var runingSize = runningList.filter { it.request.isRuning() }.size
+        var runingSize = runningList.filter { it.request.isRuning }.size
         if (runingSize < MAX_THREAD_COUNT) {
             poolOne(runningList)?.let {
                 it.start()
