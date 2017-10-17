@@ -94,7 +94,7 @@ class DownloadTaskManager : AnkoLogger {
 
     @Synchronized
     private fun poolOne(list: LinkedList<DownloadTask>): DownloadTask? {
-        return list.filter { it.request.status == DownloadRequest.STATUS_PENDING }.firstOrNull()
+        return list.firstOrNull { it.request.status == DownloadRequest.STATUS_PENDING }
     }
 
     @Synchronized
@@ -162,7 +162,7 @@ class DownloadTaskManager : AnkoLogger {
     }
 
     fun getStatus(request: DownloadRequest): DownloadRequest? {
-        return runningList.firstOrNull { it.request.id == request.id }?.request
+        return getTask(request.id)?.request
     }
 
     fun getStatus(url: String): DownloadRequest? {
